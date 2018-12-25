@@ -5,7 +5,10 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	"os"
 )
+
+var port = "8080"
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +32,12 @@ func main() {
 		}
 	})
 
-	log.Println("server is listening...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	if p := os.Getenv("PORT"); p != "" {
+		port = p
+	}
+
+	addr := ":" + port
+
+	log.Printf("http-dump is listening at %s\n", addr)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
