@@ -1,4 +1,4 @@
-FROM golang:1.10.3 AS builder
+FROM golang:1.14.0 AS builder
 
 WORKDIR /go/src/github.com/daime/http-dump
 
@@ -6,7 +6,7 @@ COPY main.go .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o http-dump .
 
-FROM scratch
+FROM marcosmorelli/debian-base-image
 
 WORKDIR /root/
 
